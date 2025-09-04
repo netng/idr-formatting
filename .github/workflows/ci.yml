@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm run test
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.node-version }}
+          path: |
+            coverage/
+            .vitest/ # if present
+          if-no-files-found: ignore
+
+      - name: Print coverage summary (lcov)
+        if: success() || failure()
+        run: |
+          if [ -f coverage/lcov.info ]; then
+            echo "## Coverage (Node ${{ matrix.node-version }})" >> $GITHUB_STEP_SUMMARY
+            npx vitest --reporter=json --run >/dev/null 2>&1 || true
+            # Show text-summary if available
+            if [ -f coverage/coverage-final.json ]; then
+              node -e "const s=require('./coverage/coverage-final.json'); const files=Object.values(s); const s1=files.reduce((a,f)=>({lines:{pct:a.lines.pct+f.lines.pct},statements:{pct:a.statements.pct+f.statements.pct},functions:{pct:a.functions.pct+f.functions.pct},branches:{pct:a.branches.pct+f.branches.pct}}),{lines:{pct:0},statements:{pct:0},functions:{pct:0},branches:{pct:0}}); const n=files.length||1; console.log(\`Lines: \${(s1.lines.pct/n).toFixed(2)}%  Statements: \${(s1.statements.pct/n).toFixed(2)}%  Functions: \${(s1.functions.pct/n).toFixed(2)}%  Branches: \${(s1.branches.pct/n).toFixed(2)}%\`);" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi

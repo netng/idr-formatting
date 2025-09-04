@@ -38,14 +38,15 @@
     "build": "rimraf dist && tsup src/index.ts --format esm,cjs --dts --sourcemap --out-dir dist",
     "prepublishOnly": "npm run build",
     "clean": "rimraf dist",
-    "test": "vitest run"
+    "test": "vitest run --coverage"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^2.1.9",
     "rimraf": "^6.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0",
-    "vitest": "^2.0.0",
-    "@types/node": "^22.0.0"
+    "vitest": "^2.0.0"
   },
   "engines": {
     "node": ">=18"
