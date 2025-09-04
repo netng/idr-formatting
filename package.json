@@ -1,6 +1,6 @@
 {
   "name": "idr-formatting",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Tiny helpers to format and parse Indonesian-style prices (IDR) with '.' thousands and ',' decimals.",
   "keywords": [
     "idr",
