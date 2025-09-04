@@ -48,12 +48,12 @@ parseIdr("1.234,56") // 1234.56
 
 ### 1) Pin the package via CDN
 
-Use jsDelivr (or unpkg). Example for version `1.0.2`:
+Use jsDelivr (or unpkg). Example for version `1.0.3`:
 
 ```bash
-bin/importmap pin idr-formatting@1.0.2 --from jsdelivr
+bin/importmap pin idr-formatting@1.0.3 --from jsdelivr
 # or:
-# bin/importmap pin idr-formatting@1.0.2 --from unpkg
+# bin/importmap pin idr-formatting@1.0.3 --from unpkg
 ```
 
 This will add the mapping to config/importmap.rb, so you can import it in the browser without a bundler.
