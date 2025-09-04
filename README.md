@@ -5,6 +5,8 @@ Tiny helpers to format and parse Indonesian-style prices (IDR).
 - Thousands separator: `.`
 - Decimal separator: `,`
 
+### Live demo
+https://netng.github.io/idr-formatting-example/
 ---
 
 ## Install
