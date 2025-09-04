@@ -1,8 +1,15 @@
 {
   "name": "idr-formatting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny helpers to format and parse Indonesian-style prices (IDR) with '.' thousands and ',' decimals.",
-  "keywords": ["idr", "currency", "rupiah", "indonesia", "format", "parse"],
+  "keywords": [
+    "idr",
+    "currency",
+    "rupiah",
+    "indonesia",
+    "format",
+    "parse"
+  ],
   "license": "MIT",
   "author": "Nandang S",
   "homepage": "https://github.com/netng/idr-formatting#readme",
@@ -13,7 +20,6 @@
   "bugs": {
     "url": "https://github.com/netng/idr-formatting/issues"
   },
-  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -29,12 +35,20 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rimraf dist && tsup src/index.ts --format esm,cjs --dts --sourcemap --out-dir dist",
     "prepublishOnly": "npm run build",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "rimraf": "^6.0.0"
+    "@types/node": "^22.18.0",
+    "rimraf": "^6.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
